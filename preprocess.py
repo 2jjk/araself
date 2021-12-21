@@ -14,6 +14,7 @@ class Preprocessor:
         strip_tatweel: bool = True,
         remove_non_digit_repetition: bool = True,
         keep_emojis: bool = True,
+        remove_arabic_quotes: bool = True,
         # apply_farasa_segmentation: bool = None,
         language: str = 'ar'
     ) -> None:
@@ -50,6 +51,7 @@ class Preprocessor:
         self.strip_tashkeel = strip_tashkeel
         self.strip_tatweel = strip_tatweel
         self.remove_non_digit_repetition = remove_non_digit_repetition
+        self.remove_arabic_quotes = remove_arabic_quotes
 
 
     def preprocess(self, text: str) -> str:
@@ -109,6 +111,10 @@ class Preprocessor:
             text = re.sub(rejected_chars_regex2, " ", text)
         else:
             text = re.sub(rejected_chars_regex, " ", text)
+
+        if self.remove_arabic_quotes:
+            text = re.sub('[”“]', '', text)
+            text = re.sub('[’‘]', '', text)
 
         text = " ".join(text.replace("\uFE0F", "").split())
 

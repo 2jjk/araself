@@ -1,0 +1,4 @@
+PyArabic
+farasapy
+emoji
+# camel-tools
